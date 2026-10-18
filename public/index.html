@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartelera: buscador de películas</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header>
+    <h1>Cartelera</h1>
+    <p>Busca una película y mira su calificación y sinopsis.</p>
+    <form id="formulario">
+      <label for="consulta" class="oculto">Título de la película</label>
+      <input id="consulta" type="search" placeholder="Ej. Coco, Interestelar, Amélie" autocomplete="off" required>
+      <button type="submit">Buscar</button>
+    </form>
+  </header>
+  <main>
+    <p id="mensaje" role="status" aria-live="polite"></p>
+    <section id="resultados" class="rejilla"></section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

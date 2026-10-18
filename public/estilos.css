@@ -1,0 +1,31 @@
+:root {
+  --fondo: #eef1f6;
+  --tinta: #1b2a49;
+  --acento: #e0a526;
+  --suave: #5b6784;
+  --blanco: #ffffff;
+  --error: #a4262c;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: var(--fondo); color: var(--tinta); }
+header { background: var(--tinta); color: var(--blanco); padding: 2.5rem 1.25rem 2rem; text-align: center; }
+h1 { font-family: Georgia, 'Times New Roman', serif; font-size: 2.6rem; margin: 0 0 .25rem; letter-spacing: .02em; }
+header p { margin: 0 0 1.25rem; color: #c9d1e3; }
+form { display: flex; gap: .5rem; max-width: 520px; margin: 0 auto; }
+input { flex: 1; padding: .75rem 1rem; font-size: 1rem; border: 2px solid transparent; border-radius: 6px; }
+button { padding: .75rem 1.4rem; font-size: 1rem; font-weight: 600; background: var(--acento); color: var(--tinta); border: 0; border-radius: 6px; cursor: pointer; }
+button:disabled { opacity: .6; cursor: wait; }
+input:focus-visible, button:focus-visible { outline: 3px solid var(--acento); outline-offset: 2px; }
+.oculto { position: absolute; left: -9999px; }
+main { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+#mensaje { text-align: center; color: var(--suave); min-height: 1.5rem; }
+#mensaje.error { color: var(--error); font-weight: 600; }
+.rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.25rem; }
+.tarjeta { background: var(--blanco); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 4px rgba(27, 42, 73, .15); }
+.tarjeta img, .sin-poster { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; background: #d5dbe8; }
+.sin-poster { display: grid; place-items: center; color: var(--suave); }
+.info { padding: .9rem 1rem 1.1rem; }
+.info h2 { font-family: Georgia, serif; font-size: 1.1rem; margin: 0 0 .25rem; }
+.meta { margin: 0 0 .5rem; color: var(--suave); font-size: .9rem; }
+.sinopsis { margin: 0; font-size: .9rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+@media (max-width: 480px) { form { flex-direction: column; } }
