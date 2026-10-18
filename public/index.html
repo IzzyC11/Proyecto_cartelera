@@ -3,23 +3,182 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cartelera: buscador de películas</title>
+  <title>Cartelera · Buscador de películas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+
   <header>
-    <h1>Cartelera</h1>
-    <p>Busca una película y mira su calificación y sinopsis.</p>
-    <form id="formulario">
-      <label for="consulta" class="oculto">Título de la película</label>
-      <input id="consulta" type="search" placeholder="Ej. Coco, Interestelar, Amélie" autocomplete="off" required>
-      <button type="submit">Buscar</button>
-    </form>
+    <!-- Partículas de fondo -->
+    <div class="particulas" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- Tira de película superior -->
+    <div class="filmstrip" aria-hidden="true">
+      <div class="filmstrip-inner">
+        <span>🎥</span><span>⭐</span><span>🎞️</span><span>🍿</span><span>🎬</span>
+        <span>🎥</span><span>⭐</span><span>🎞️</span><span>🍿</span><span>🎬</span>
+        <span>🎥</span><span>⭐</span><span>🎞️</span><span>🍿</span><span>🎬</span>
+        <span>🎥</span><span>⭐</span><span>🎞️</span><span>🍿</span><span>🎬</span>
+      </div>
+    </div>
+
+    <div class="header-inner">
+
+      <!-- Chip "TMDB Powered" -->
+      <div class="header-chip">
+        <span class="chip-dot"></span>
+        Powered by TMDB
+      </div>
+
+      <!-- Título principal -->
+      <div class="hero-titulo">
+        <h1>
+          <span class="titulo-linea1">Tu próxima</span>
+          <span class="titulo-linea2">película favorita</span>
+          <span class="titulo-linea3">te está esperando</span>
+        </h1>
+        <p class="tagline">
+          Busca entre millones de títulos. Lee la sinopsis, mira la calificación y descubre tu siguiente obsesión cinematográfica.
+        </p>
+      </div>
+
+      <!-- Buscador -->
+      <form id="formulario" role="search">
+        <label for="consulta" class="oculto">Título de la película</label>
+        <div class="campo-busqueda">
+          <svg class="icono-lupa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            id="consulta"
+            type="search"
+            placeholder="Coco, Interestelar, Amélie…"
+            autocomplete="off"
+            spellcheck="false"
+            required
+          >
+          <button type="submit" id="btn-buscar">
+            <span class="btn-texto">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              Buscar
+            </span>
+            <svg class="spinner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Sugerencias rápidas -->
+      <div class="sugerencias" aria-label="Búsquedas populares">
+        <span class="sugerencias-label">Populares:</span>
+        <button type="button" class="chip-sugerencia" data-q="Dune">Dune</button>
+        <button type="button" class="chip-sugerencia" data-q="Oppenheimer">Oppenheimer</button>
+        <button type="button" class="chip-sugerencia" data-q="El Padrino">El Padrino</button>
+        <button type="button" class="chip-sugerencia" data-q="Inception">Inception</button>
+        <button type="button" class="chip-sugerencia" data-q="Parasite">Parasite</button>
+      </div>
+
+    </div>
+
+    <!-- Ola decorativa inferior -->
+    <div class="header-wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="#f5f3ff"/>
+      </svg>
+    </div>
   </header>
+
   <main>
     <p id="mensaje" role="status" aria-live="polite"></p>
-    <section id="resultados" class="rejilla"></section>
+    <section id="resultados" class="rejilla" aria-label="Resultados de búsqueda"></section>
   </main>
+
+  <footer>
+    <p>Datos proporcionados por <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer">TMDB</a></p>
+  </footer>
+
+  <!-- ── Modal de detalles ─────────────────────────────────── -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" hidden>
+    <div class="modal-backdrop"></div>
+    <div class="modal-caja">
+
+      <!-- Imagen panorámica de fondo -->
+      <div class="modal-backdrop-img" id="modal-backdrop-img" aria-hidden="true"></div>
+
+      <!-- Botón cerrar -->
+      <button class="modal-cerrar" id="modal-cerrar" aria-label="Cerrar detalles">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <!-- Cuerpo del modal -->
+      <div class="modal-cuerpo">
+
+        <!-- Póster -->
+        <div class="modal-poster-wrap">
+          <img id="modal-poster" class="modal-poster" src="" alt="" loading="lazy">
+          <div id="modal-sin-poster" class="modal-sin-poster" hidden>🎞️</div>
+        </div>
+
+        <!-- Info -->
+        <div class="modal-info">
+
+          <!-- Tagline -->
+          <p id="modal-tagline" class="modal-tagline"></p>
+
+          <!-- Título -->
+          <h2 id="modal-titulo" class="modal-titulo-texto"></h2>
+          <p id="modal-titulo-orig" class="modal-titulo-orig"></p>
+
+          <!-- Badges rápidos -->
+          <div class="modal-badges" id="modal-badges"></div>
+
+          <!-- Géneros -->
+          <div id="modal-generos" class="modal-generos"></div>
+
+          <!-- Sinopsis -->
+          <p id="modal-sinopsis" class="modal-sinopsis"></p>
+
+          <!-- Ficha técnica -->
+          <dl class="modal-ficha" id="modal-ficha"></dl>
+
+          <!-- Acciones -->
+          <div class="modal-acciones">
+            <a id="modal-tmdb-link" href="#" target="_blank" rel="noopener noreferrer" class="btn-tmdb">
+              Ver en TMDB
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Spinner de carga del modal -->
+      <div class="modal-loading" id="modal-loading" aria-label="Cargando detalles">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+        </svg>
+        <span>Cargando detalles…</span>
+      </div>
+
+      <!-- Error del modal -->
+      <p class="modal-error" id="modal-error" hidden></p>
+
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
